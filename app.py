@@ -18,7 +18,7 @@ with st.sidebar:
 
 # 📊 Página de Orçamento Geral
 if menu_selecionado == "📊 Orçamento":
-    st.title("📊 Orçamento do Projeto - Projeto Zeus ")
+    st.title("📊 Orçamento - Projeto Zeus ")
     
     st.markdown("### **💰 Valor Total do Projeto: R$ 70.000**")
     st.markdown("✅ **Custo com equipe:** R$ 25.000")
