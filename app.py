@@ -74,11 +74,32 @@ elif menu_selecionado == "🖥 Infraestrutura":
     st.markdown("💡 **Total estimado de infraestrutura:** **R$ 2.000 - R$ 6.000/mês**")
 
 # 📄 Gerar PDF do Orçamento
-# 📄 Gerar PDF do Orçamento
 elif menu_selecionado == "📄 Gerar PDF":
     st.title("📄 Gerar PDF do Orçamento")
 
     if st.button("📥 Gerar PDF"):
+        # Definir as variáveis dentro do bloco antes de usá-las
+        valor_total = 70000
+        desconto = valor_total * 0.105
+        valor_final = valor_total - desconto
+        tempo_estimado = "40 dias"
+
+        equipe = [
+            ("Desenvolvedor Frontend", 5000),
+            ("Desenvolvedor Backend", 5000),
+            ("Especialista em Banco de Dados", 5000),
+            ("Especialista em UX/UI", 5000),
+            ("Engenheiro de Qualidade (QA)", 5000),
+        ]
+        total_equipe = sum(c[1] for c in equipe)
+
+        infraestrutura = [
+            ("Servidores Cloud", "R$ 500 - R$ 1.500/mês"),
+            ("Banco de Dados", "R$ 300 - R$ 1.000/mês"),
+            ("Domínio + Certificado SSL", "R$ 150 - R$ 300 (anual)"),
+            ("Ferramentas de IA", "R$ 1.000 - R$ 3.000/mês"),
+        ]
+
         pdf = FPDF()
         pdf.add_page()
         
@@ -86,9 +107,6 @@ elif menu_selecionado == "📄 Gerar PDF":
         pdf.set_font("Arial", "B", 16)
         pdf.cell(200, 10, "Orçamento Empresarial", ln=True, align="C")
         pdf.ln(10)  # Espaço
-
-        # Definir fonte padrão
-        pdf.set_font("Arial", size=12)
 
         # 📌 Seção 1: Informações Gerais
         pdf.set_font("Arial", "B", 14)
@@ -104,14 +122,6 @@ elif menu_selecionado == "📄 Gerar PDF":
         pdf.set_font("Arial", "B", 14)
         pdf.cell(200, 10, "💼 Custos com Equipe", ln=True)
         pdf.set_font("Arial", size=12)
-        equipe = [
-            ("Desenvolvedor Frontend", 5000),
-            ("Desenvolvedor Backend", 5000),
-            ("Especialista em Banco de Dados", 5000),
-            ("Especialista em UX/UI", 5000),
-            ("Engenheiro de Qualidade (QA)", 5000),
-        ]
-        total_equipe = sum(c[1] for c in equipe)
 
         for prof, custo in equipe:
             pdf.cell(200, 10, f"{prof}: R$ {custo:,.2f}", ln=True)
@@ -122,12 +132,7 @@ elif menu_selecionado == "📄 Gerar PDF":
         pdf.set_font("Arial", "B", 14)
         pdf.cell(200, 10, "🖥 Custos com Infraestrutura", ln=True)
         pdf.set_font("Arial", size=12)
-        infraestrutura = [
-            ("Servidores Cloud", "R$ 500 - R$ 1.500/mês"),
-            ("Banco de Dados", "R$ 300 - R$ 1.000/mês"),
-            ("Domínio + Certificado SSL", "R$ 150 - R$ 300 (anual)"),
-            ("Ferramentas de IA", "R$ 1.000 - R$ 3.000/mês"),
-        ]
+
         for servico, custo in infraestrutura:
             pdf.cell(200, 10, f"{servico}: {custo}", ln=True)
         pdf.ln(10)  # Espaço
@@ -139,4 +144,5 @@ elif menu_selecionado == "📄 Gerar PDF":
         st.success("✅ PDF gerado com sucesso! Baixe abaixo:")
         with open(pdf_file_path, "rb") as file:
             st.download_button("📥 Baixar PDF", file, file_name="orcamento.pdf", mime="application/pdf")
+
 
