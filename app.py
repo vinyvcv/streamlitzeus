@@ -20,7 +20,9 @@ with st.sidebar:
 if menu_selecionado == "📊 Orçamento":
     st.title("📊 Orçamento - Projeto Zeus ")
     
-    st.markdown("### **💰 Valor Total do Projeto: R$ 70.000**")
+    st.markdown(f"### **💰 Valor Total do Projeto: R$ 70.000**")
+    st.markdown(f"### **📉 Desconto (10,50% de nota): R$ {desconto:,.2f}**")
+    st.markdown(f"### **✅ Valor Final após desconto: R$ {valor_final:,.2f}**")
     st.markdown("✅ **Custo com equipe:** R$ 25.000")
     st.markdown("✅ **Infraestrutura variável:** R$ 2.000 - R$ 6.000/mês")
     st.markdown("✅ **Receita recorrente (suporte e manutenção):** R$ 3.000 - R$ 5.000/mês")
