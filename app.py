@@ -78,7 +78,7 @@ elif menu_selecionado == "📄 Gerar PDF":
     st.title("📄 Gerar PDF do Orçamento")
 
     if st.button("📥 Gerar PDF"):
-        # Definir as variáveis dentro do bloco antes de usá-las
+        # Definir valores antes de usá-los
         valor_total = 70000
         desconto = valor_total * 0.105
         valor_final = valor_total - desconto
@@ -103,43 +103,51 @@ elif menu_selecionado == "📄 Gerar PDF":
         pdf = FPDF()
         pdf.add_page()
         
-        # Configurar fonte e título principal
+        # Adicionar uma fonte que suporte caracteres especiais (UTF-8)
+        pdf.add_font("Arial", "", "arial.ttf", uni=True)  
         pdf.set_font("Arial", "B", 16)
+        
+        # Título Principal
         pdf.cell(200, 10, "Orçamento Empresarial", ln=True, align="C")
-        pdf.ln(10)  # Espaço
+        pdf.ln(10)
 
-        # 📌 Seção 1: Informações Gerais
+        # 📌 Informações Gerais
         pdf.set_font("Arial", "B", 14)
         pdf.cell(200, 10, "📌 Informações Gerais", ln=True)
-        pdf.set_font("Arial", size=12)
+        pdf.set_font("Arial", "", 12)
         pdf.cell(200, 10, f"Valor Total do Projeto: R$ {valor_total:,.2f}", ln=True)
         pdf.cell(200, 10, f"Desconto (10,50% de nota): R$ {desconto:,.2f}", ln=True)
         pdf.cell(200, 10, f"Valor Final após desconto: R$ {valor_final:,.2f}", ln=True)
         pdf.cell(200, 10, f"Tempo estimado de trabalho: {tempo_estimado}", ln=True)
-        pdf.ln(10)  # Espaço
+        pdf.ln(10)
 
-        # 💼 Seção 2: Custos com Equipe
+        # 💼 Custos com Equipe
         pdf.set_font("Arial", "B", 14)
         pdf.cell(200, 10, "💼 Custos com Equipe", ln=True)
-        pdf.set_font("Arial", size=12)
+        pdf.set_font("Arial", "", 12)
 
         for prof, custo in equipe:
             pdf.cell(200, 10, f"{prof}: R$ {custo:,.2f}", ln=True)
         pdf.cell(200, 10, f"Total com equipe: R$ {total_equipe:,.2f}", ln=True)
-        pdf.ln(10)  # Espaço
+        pdf.ln(10)
 
-        # 🖥 Seção 3: Infraestrutura
+        # 🖥 Infraestrutura
         pdf.set_font("Arial", "B", 14)
         pdf.cell(200, 10, "🖥 Custos com Infraestrutura", ln=True)
-        pdf.set_font("Arial", size=12)
+        pdf.set_font("Arial", "", 12)
 
         for servico, custo in infraestrutura:
             pdf.cell(200, 10, f"{servico}: {custo}", ln=True)
-        pdf.ln(10)  # Espaço
+        pdf.ln(10)
 
         # 📄 Salvar e disponibilizar PDF
         pdf_file_path = "orcamento.pdf"
-        pdf.output(pdf_file_path)
+        pdf.output(pdf_file_path, "F")
+
+        st.success("✅ PDF gerado com sucesso! Baixe abaixo:")
+        with open(pdf_file_path, "rb") as file:
+            st.download_button("📥 Baixar PDF", file, file_name="orcamento.pdf", mime="application/pdf")
+
 
         st.success("✅ PDF gerado com sucesso! Baixe abaixo:")
         with open(pdf_file_path, "rb") as file:
