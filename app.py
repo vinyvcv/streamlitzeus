@@ -103,10 +103,9 @@ elif menu_selecionado == "📄 Gerar PDF":
         pdf = FPDF()
         pdf.add_page()
         
-        # Adicionar uma fonte que suporte caracteres especiais (UTF-8)
-        pdf.add_font("Arial", "", "arial.ttf", uni=True)  
+        # Usar fonte padrão do FPDF para evitar erro
         pdf.set_font("Arial", "B", 16)
-        
+
         # Título Principal
         pdf.cell(200, 10, "Orçamento Empresarial", ln=True, align="C")
         pdf.ln(10)
@@ -143,11 +142,6 @@ elif menu_selecionado == "📄 Gerar PDF":
         # 📄 Salvar e disponibilizar PDF
         pdf_file_path = "orcamento.pdf"
         pdf.output(pdf_file_path, "F")
-
-        st.success("✅ PDF gerado com sucesso! Baixe abaixo:")
-        with open(pdf_file_path, "rb") as file:
-            st.download_button("📥 Baixar PDF", file, file_name="orcamento.pdf", mime="application/pdf")
-
 
         st.success("✅ PDF gerado com sucesso! Baixe abaixo:")
         with open(pdf_file_path, "rb") as file:
