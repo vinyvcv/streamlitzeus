@@ -19,7 +19,12 @@ with st.sidebar:
 # 📊 Página de Orçamento Geral
 if menu_selecionado == "📊 Orçamento":
     st.title("📊 Orçamento - Projeto Zeus ")
-    
+
+    # Definir valores antes de usar
+    valor_total = 70000
+    desconto = valor_total * 0.105
+    valor_final = valor_total - desconto
+
     st.markdown(f"### **💰 Valor Total do Projeto: R$ 70.000**")
     st.markdown(f"### **📉 Desconto (10,50% de nota): R$ {desconto:,.2f}**")
     st.markdown(f"### **✅ Valor Final após desconto: R$ {valor_final:,.2f}**")
@@ -80,7 +85,9 @@ elif menu_selecionado == "📄 Gerar PDF":
         pdf.cell(200, 10, "", ln=True)  # Espaço
         
         pdf.set_font("Arial", size=12)
-        pdf.cell(200, 10, "Valor Total do Projeto: R$ 70.000", ln=True)
+        pdf.cell(200, 10, f"Valor Total do Projeto: R$ {valor_total:,.2f}", ln=True)
+        pdf.cell(200, 10, f"Desconto (10,50% de nota): R$ {desconto:,.2f}", ln=True)
+        pdf.cell(200, 10, f"Valor Final após desconto: R$ {valor_final:,.2f}", ln=True)
         pdf.cell(200, 10, "Custo com Equipe: R$ 25.000", ln=True)
         pdf.cell(200, 10, "Infraestrutura Mensal: R$ 2.000 - R$ 6.000/mês", ln=True)
         pdf.cell(200, 10, "Receita Recorrente: R$ 3.000 - R$ 5.000/mês", ln=True)
